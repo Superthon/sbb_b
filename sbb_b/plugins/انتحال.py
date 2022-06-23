@@ -1,5 +1,3 @@
-# Copyright (C) 2021 sbb_b TEAM
-# t.me/sbb_b
 import html
 
 from telethon.tl import functions
@@ -15,45 +13,45 @@ from . import (
     DEFAULT_BIO,
     edit_delete,
     get_user_from_event,
-    sbb_b,
+    Superthon,
 )
 
 DEFAULTUSER = str(AUTONAME) if AUTONAME else str(ALIVE_NAME)
 DEFAULTUSERBIO = (
-    str(DEFAULT_BIO) if DEFAULT_BIO else "﴿ لا تَحزَن إِنَّ اللَّهَ مَعَنا ﴾"
+    str(DEFAULT_BIO) if DEFAULT_BIO else "﴿ لا تَحزَن إِنَّ اللَّهَ مَعَنا ﴾ - @Superthon "
 )
 
 
-@sbb_b.ar_cmd(pattern="انتحال(?:\s|$)([\s\S]*)")
+@Superthon.ar_cmd(pattern="انتحال(?:\s|$)([\s\S]*)")
 async def _(event):
-    reply_sbb_b, error_i_a = await get_user_from_event(event)
-    if reply_sbb_b is None:
+    reply_Superthon, error_i_a = await get_user_from_event(event)
+    if reply_Superthon is None:
         return
-    user_id = reply_sbb_b.id
+    user_id = reply_Superthon.id
     profile_pic = await event.client.download_profile_photo(user_id, Config.TEMP_DIR)
-    first_name = html.escape(reply_sbb_b.first_name)
-    if user_id == 2034443585:
-        await event.edit("⌔∮ ههه لا يمكنك انتحال مطور السورس العب بعيد عمو")
+    first_name = html.escape(reply_Superthon.first_name)
+    if user_id == 5532332204:
+        await event.edit(" ههه لا يمكنك انتحال مطور السورس العب بعيد عمو")
         await asyncio.sleep(3)
         return
     if first_name is not None:
         first_name = first_name.replace("\u2060", "")
-    last_name = reply_sbb_b.last_name
+    last_name = reply_Superthon.last_name
     if last_name is not None:
         last_name = html.escape(last_name)
         last_name = last_name.replace("\u2060", "")
     if last_name is None:
         last_name = "⁪⁬⁮⁮⁮⁮ ‌‌‌‌"
-    reply_sbb_b = await event.client(GetFullUserRequest(reply_sbb_b.id))
-    user_bio = reply_sbb_b.about
+    reply_Superthon = await event.client(GetFullUserRequest(reply_Superthon.id))
+    user_bio = reply_Superthon.about
     if user_bio is not None:
-        user_bio = reply_sbb_b.about
+        user_bio = reply_Superthon.about
     await event.client(functions.account.UpdateProfileRequest(first_name=first_name))
     await event.client(functions.account.UpdateProfileRequest(last_name=last_name))
     await event.client(functions.account.UpdateProfileRequest(about=user_bio))
     pfile = await event.client.upload_file(profile_pic)
     await event.client(functions.photos.UploadProfilePhotoRequest(pfile))
-    await edit_delete(event, "- تم نسخ الحساب بنجاح  ✓")
+    await edit_delete(event, "- تم نسخ الحساب بنجاح  ")
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
@@ -61,7 +59,7 @@ async def _(event):
         )
 
 
-@sbb_b.ar_cmd(pattern="اعادة$")
+@Superthon.ar_cmd(pattern="اعادة$")
 async def _(event):
     name = f"{DEFAULTUSER}"
     roz = ""
@@ -74,8 +72,8 @@ async def _(event):
     await event.client(functions.account.UpdateProfileRequest(about=bio))
     await event.client(functions.account.UpdateProfileRequest(first_name=name))
     await event.client(functions.account.UpdateProfileRequest(last_name=roz))
-    await edit_delete(event, "- تم اعادة الحساب بنجاح ✓")
+    await edit_delete(event, "- تم اعادة الحساب بنجاح ")
     if BOTLOG:
         await event.client.send_message(
-            BOTLOG_CHATID, f"- تم اعادة الحساب الى وضعه الاصلي ✓"
+            BOTLOG_CHATID, f"- تم اعادة الحساب الى وضعه الاصلي "
         )
